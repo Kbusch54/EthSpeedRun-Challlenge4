@@ -1,11 +1,13 @@
-import { Card } from "antd";
+import { Card, Button, Col, Row, Statistic } from "antd";
 import React, { useMemo, useState } from "react";
-import { useContractExistsAtAddress, useContractLoader } from "eth-hooks";
+import { useContractExistsAtAddress, useContractLoader, useContractReader } from "eth-hooks";
 import Account from "../Account";
+import { useEventListener } from "eth-hooks/events/useEventListener";
 import DisplayVariable from "./DisplayVariable";
 import FunctionForm from "./FunctionForm";
 import Address from "../Address";
 import Balance from "../Balance";
+import { ethers } from "ethers";
 
 const noContractDisplay = (
   <div>
@@ -57,6 +59,7 @@ export default function Contract({
   blockExplorer,
   chainId,
   contractConfig,
+  readContract,
 }) {
   const contracts = useContractLoader(provider, contractConfig, chainId);
   let contract;
@@ -64,6 +67,21 @@ export default function Contract({
     contract = contracts ? contracts[name] : "";
   } else {
     contract = customContract;
+  }
+
+  let approvalNum;
+  const showApproval = useContractReader(
+    readContract,
+    name,
+    "allowance",
+    [signer.address, readContract.DEX.address],
+    1337,
+  );
+  console.log("===============================");
+  if (!showApproval) {
+    console.log("Waitng for showApproval");
+  } else {
+    approvalNum = Math.floor(ethers.utils.formatEther(showApproval));
   }
 
   const address = contract ? contract.address : "";
@@ -133,7 +151,16 @@ export default function Contract({
         style={{ marginTop: 25, width: "100%" }}
         loading={contractDisplay && contractDisplay.length <= 0}
       >
-        {contractIsDeployed ? contractDisplay : noContractDisplay}
+        {showApproval && (
+          <>
+            <Row gutter={6}>
+              <Col span={8}>
+                <Statistic title="🎈 tokens approved" value={approvalNum} />
+              </Col>
+              <Col span={16}>{contractIsDeployed ? contractDisplay : noContractDisplay}</Col>
+            </Row>
+          </>
+        )}
       </Card>
     </div>
   );

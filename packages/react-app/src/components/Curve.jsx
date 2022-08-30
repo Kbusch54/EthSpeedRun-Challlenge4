@@ -162,7 +162,7 @@ export default function Curve(props) {
         );
       }
 
-      ctx.fillStyle = "#0000FF";
+      ctx.fillStyle = "#00ff2a";
       ctx.beginPath();
       ctx.arc(plotX(props.ethReserve), plotY(props.tokenReserve), 5, 0, 2 * Math.PI);
       ctx.fill();

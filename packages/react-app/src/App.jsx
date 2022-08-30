@@ -1,4 +1,5 @@
-import { Button, Col, Menu, Row, List } from "antd";
+import { Button, Col, Menu, Row, List, Space, Dropdown } from "antd";
+
 import "antd/dist/antd.css";
 import {
   useBalance,
@@ -25,8 +26,6 @@ import {
   NetworkSwitch,
   TokenBalance,
   Dex,
-  Address,
-  Balance,
   Events,
 } from "./components";
 import { NETWORKS, ALCHEMY_KEY } from "./constants";
@@ -39,6 +38,13 @@ import { useStaticJsonRPC } from "./hooks";
 import { useEventListener } from "eth-hooks/events/useEventListener";
 
 const { ethers } = require("ethers");
+
+const tokenSymbols = a => {
+  if (a === "Balloons") return "🎈";
+  else if (a === "Monkey") return "🐵";
+  return "🐸 ";
+};
+
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -148,15 +154,20 @@ function App(props) {
   const yourMainnetBalance = useBalance(mainnetProvider, address);
 
   // const contractConfig = useContractConfig();
+  const [tokenName, setTokenName] = useState("Balloons");
+  // const [liquidity, setLiquidity]=useState(0);
+  const [froggerLiquidity, setFroggerLiquidity] = useState(0);
+  const [monkeyLiquidity, setMonkeyLiquidity] = useState(0);
+  const [balloonsLiquidity, setBalloonsLiquidty] = useState(0);
 
   const contractConfig = { deployedContracts: deployedContracts || {}, externalContracts: externalContracts || {} };
 
   // Load in your local 📝 contract and read a value from it:
   const readContracts = useContractLoader(localProvider, contractConfig);
-  const liquidity = useContractReader(readContracts, "DEX", "getLiquidity", [address]);
 
   // If you want to make 🔐 write transactions to your contracts, use the userSigner:
   const writeContracts = useContractLoader(userSigner, contractConfig, localChainId);
+  console.log(writeContracts);
 
   // EXTERNAL CONTRACT EXAMPLE:
   //
@@ -174,7 +185,7 @@ function App(props) {
   ]);
 
   // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "Balloons", "purpose");
+  // const purpose = useContractReader(readContracts, "Balloons", "purpose");
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -267,6 +278,18 @@ function App(props) {
   // const LiquidityRemovedEvents = useEventListener(readContracts, "DEX", "LiquidityRemoved", 1);
   // // console.log("➖ LiquidityRemovedEvents:", LiquidityRemovedEvents);
 
+  const handleTokenSwitch = e => {
+    // e.preventDefault();
+    console.log("This is the new shit bitch", e);
+    setTokenName(e.key);
+  };
+  const tokenType = a => {
+    if (a === "Balloons") return balloonsLiquidity;
+    else if (a === "Monkey") return monkeyLiquidity;
+    return froggerLiquidity;
+  };
+  const liquidity = 0;
+
   return (
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
@@ -286,18 +309,7 @@ function App(props) {
         <Menu.Item key="/Events">
           <Link to="/Events">Eventlist 📜</Link>
         </Menu.Item>
-        <Menu.Item key="/debug">
-          <Link to="/debug">Debug Contracts</Link>
-        </Menu.Item>
-        <Menu.Item key="/hints">
-          <Link to="/hints">Hints</Link>
-        </Menu.Item>
-        <Menu.Item key="/exampleui">
-          <Link to="/exampleui">ExampleUI</Link>
-        </Menu.Item>
-        <Menu.Item key="/mainnetdai">
-          <Link to="/mainnetdai">Mainnet DAI</Link>
-        </Menu.Item>
+
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
         </Menu.Item>
@@ -313,11 +325,15 @@ function App(props) {
               localProvider={localProvider}
               mainnetProvider={mainnetProvider}
               blockExplorer={blockExplorer}
+              symbol={tokenSymbols(tokenName)}
               address={address} //this is causing issues
               readContracts={readContracts} //this is causing issues
               contractConfig={contractConfig}
+              tokenName={tokenName}
               signer={userSigner}
+              method={e => handleTokenSwitch(e)}
               price={price}
+              yourLocalBalance={yourLocalBalance}
             />
           ) : (
             ""
@@ -376,86 +392,6 @@ function App(props) {
             startBlock={1}
           />
         </Route>
-        }
-        <Route exact path="/debug">
-          {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
-          <Contract
-            name="DEX"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
-
-          <Contract
-            name="Balloons"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
-        </Route>
-        <Route path="/hints">
-          <Hints
-            address={address}
-            yourLocalBalance={yourLocalBalance}
-            mainnetProvider={mainnetProvider}
-            price={price}
-          />
-        </Route>
-        <Route path="/exampleui">
-          <ExampleUI
-            address={address}
-            userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            localProvider={localProvider}
-            yourLocalBalance={yourLocalBalance}
-            price={price}
-            tx={tx}
-            writeContracts={writeContracts}
-            readContracts={readContracts}
-            purpose={purpose}
-          />
-        </Route>
-        <Route path="/mainnetdai">
-          <Contract
-            name="DAI"
-            customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.DAI}
-            signer={userSigner}
-            provider={mainnetProvider}
-            address={address}
-            blockExplorer="https://etherscan.io/"
-            contractConfig={contractConfig}
-            chainId={1}
-          />
-          {/*
-            <Contract
-              name="UNI"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.UNI}
-              signer={userSigner}
-              provider={mainnetProvider}
-              address={address}
-              blockExplorer="https://etherscan.io/"
-            />
-            */}
-        </Route>
-        <Route path="/subgraph">
-          <Subgraph
-            subgraphUri={props.subgraphUri}
-            tx={tx}
-            writeContracts={writeContracts}
-            mainnetProvider={mainnetProvider}
-          />
-        </Route>
       </Switch>
 
       <ThemeSwitch />
@@ -489,10 +425,10 @@ function App(props) {
         {yourLocalBalance.lte(ethers.BigNumber.from("0")) && (
           <FaucetHint localProvider={localProvider} targetNetwork={targetNetwork} address={address} />
         )}
-
-        <TokenBalance name={"Balloons"} img={"🎈"} address={address} contracts={readContracts} />
+        {/* {console.log("====", tokenSymbols.Object["Balloons"], "====")} */}
+        <TokenBalance name={tokenName} img={tokenSymbols(tokenName)} address={address} contracts={readContracts} />
         <h3>
-          💦💦: <TokenBalance balance={liquidity} />
+          💦💦: <TokenBalance balance={liquidity ? liquidity : 0} />
         </h3>
         {FaucetHint}
       </div>

@@ -690,7 +690,7 @@ body {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-variant: tabular-nums;
   line-height: 1.5715;
-  background-color: #212121;
+  background-color: rgba(0, 6, 0, 0.91);
   font-feature-settings: "tnum";
 }
 [tabindex="-1"]:focus {
@@ -3963,18 +3963,56 @@ a.ant-btn-sm {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
   font-feature-settings: "tnum";
   position: relative;
-  background: #212121;
+
   border-radius: 4px;
+  /* ff 3.6+ */
+  background: -moz-linear-gradient(
+    100deg,
+    rgba(0, 0, 0, 0.99) 2%,
+    rgba(7, 25, 232, 1) 58%,
+    rgba(105, 28, 172, 0.98) 87%
+  );
+
+  /* safari 5.1+,chrome 10+ */
+  background: -webkit-linear-gradient(
+    100deg,
+    rgba(0, 0, 0, 0.99) 2%,
+    rgba(7, 25, 232, 1) 58%,
+    rgba(105, 28, 172, 0.98) 87%
+  );
+
+  /* opera 11.10+ */
+  background: -o-linear-gradient(100deg, rgba(0, 0, 0, 0.99) 2%, rgba(7, 25, 232, 1) 58%, rgba(105, 28, 172, 0.98) 87%);
+
+  /* ie 6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#691CAC', endColorstr='#000000', GradientType=0 );
+
+  /* ie 10+ */
+  background: -ms-linear-gradient(
+    100deg,
+    rgba(0, 0, 0, 0.99) 2%,
+    rgba(7, 25, 232, 1) 58%,
+    rgba(105, 28, 172, 0.98) 87%
+  );
+
+  /* global 94%+ browsers support */
+  background: linear-gradient(100deg, rgba(0, 0, 0, 0.99) 2%, rgba(7, 25, 232, 1) 58%, rgba(105, 28, 172, 0.98) 87%);
 }
 .ant-card-rtl {
   direction: rtl;
+}
+.ant-card-head div {
+  background: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .ant-card-hoverable {
   cursor: pointer;
@@ -7892,6 +7930,25 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   position: relative;
   max-width: 100%;
   min-height: 1px;
+  background: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-decoration: blue;
+  -webkit-text-fill-color: transparent;
+}
+.ant-col input {
+  -webkit-text-fill-color: white;
+}
+.ant-col div div div {
+  -webkit-text-fill-color: white;
+}
+.ant-row .ant-col div .ant-row .ant-col {
+  -webkit-text-fill-color: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
+  text-opacity: 1;
+}
+
+.ant-col canvas {
+  background: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
 }
 .ant-col-24 {
   display: block;
@@ -13664,7 +13721,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 }
 .ant-input-textarea-show-count::after {
   display: block;
-  color: #d9d9d9;
+  color: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
   text-align: right;
   content: attr(data-count);
 }
@@ -14381,6 +14438,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding-top: 0;
   padding-bottom: 0;
   border-bottom: none;
+  opacity: 1;
 }
 .ant-list-item-no-flex {
   display: block;
@@ -14764,10 +14822,24 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   line-height: 0;
   text-align: left;
   list-style: none;
-  background: #212121;
+  /* background: #212121; */
   outline: 0;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
   transition: background 0.3s, width 0.3s cubic-bezier(0.2, 0, 0, 1) 0s;
+  /* ff 3.6+ */
+  background: -moz-radial-gradient(ellipse at 48% 52%, rgba(0, 6, 0, 0.91) 57%, rgba(156, 39, 176, 1) 97%);
+
+  /* safari 5.1+,chrome 10+ */
+  background: -webkit-radial-gradient(ellipse at 48% 52%, rgba(0, 6, 0, 0.91) 57%, rgba(156, 39, 176, 1) 97%);
+
+  /* opera 11.10+ */
+  background: -o-radial-gradient(ellipse at 48% 52%, rgba(0, 6, 0, 0.91) 57%, rgba(156, 39, 176, 1) 97%);
+
+  /* ie 10+ */
+  background: -ms-radial-gradient(ellipse at 48% 52%, rgba(0, 6, 0, 0.91) 57%, rgba(156, 39, 176, 1) 97%);
+
+  /* global 92%+ browsers support */
+  background: radial-gradient(ellipse at 48% 52%, rgba(0, 6, 0, 0.91) 57%, rgba(156, 39, 176, 1) 97%);
 }
 .ant-menu::after,
 .ant-menu::before {

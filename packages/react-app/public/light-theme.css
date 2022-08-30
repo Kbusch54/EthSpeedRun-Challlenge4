@@ -684,15 +684,16 @@ html {
 }
 body {
   margin: 0;
-  color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(255, 255, 255, 1);
   font-size: 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-variant: tabular-nums;
   line-height: 1.5715;
-  background-color: #fff;
+  color: rgba(0, 0, 0, 1);
   font-feature-settings: "tnum";
 }
+
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
@@ -3959,18 +3960,19 @@ a.ant-btn-sm {
 .ant-picker-calendar-rtl.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content {
   text-align: right;
 }
+/* sdashkdkasdlasdklasjkldkljasdkljaskljdaklsdklaskdjkajsdkjaskljdklasdasdjlasdakljsdkjlasdkakjsdjkaslkdjasdklaskdjlkasjdlkajsdkljaslkdjalskdjlkasjdlkajsdlkjaslkdjalskjdlaksjdlkasdas */
 .ant-card {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.85);
+  color: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
   font-feature-settings: "tnum";
   position: relative;
-  background: #fff;
+
   border-radius: 4px;
 }
 .ant-card-rtl {
@@ -3991,13 +3993,14 @@ a.ant-btn-sm {
   min-height: 48px;
   margin-bottom: -1px;
   padding: 0 24px;
-  color: rgba(0, 0, 0, 0.85);
+  /* color: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%); */
   font-weight: 500;
   font-size: 16px;
   background: 0 0;
   border-bottom: 1px solid #f0f0f0;
   border-radius: 4px 4px 0 0;
 }
+
 .ant-card-head::before {
   display: table;
   content: "";
@@ -7772,6 +7775,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-row {
   flex-flow: row wrap;
 }
+
 .ant-row,
 .ant-row::after,
 .ant-row::before {

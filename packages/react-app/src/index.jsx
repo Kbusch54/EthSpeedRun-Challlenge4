@@ -24,7 +24,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <ThemeSwitcherProvider themeMap={themes} defaultTheme={prevTheme || "light"}>
       <BrowserRouter>
-        <App subgraphUri={subgraphUri} />
+        <App subgraphUri={subgraphUri} className="gradient__bg " />
       </BrowserRouter>
     </ThemeSwitcherProvider>
   </ApolloProvider>,
